@@ -9,7 +9,7 @@ export default function PlatformAdminDashboard() {
 
   const fetchTenants = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/tenant", {
+      const res = await fetch("http://localhost:1501/api/tenant", {
         headers: { "Authorization": `Bearer ${Cookies.get("token")}` }
       });
       const data = await res.json();

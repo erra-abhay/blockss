@@ -13,7 +13,7 @@ export default function OrgUsersPage({ params }: { params: { id: string } }) {
 
   const fetchTenant = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/api/tenant/${params.id}`, {
+      const res = await fetch(`http://localhost:1501/api/tenant/${params.id}`, {
         headers: { "Authorization": `Bearer ${Cookies.get("token")}` }
       });
       if (res.ok) setTenant(await res.json());
@@ -31,7 +31,7 @@ export default function OrgUsersPage({ params }: { params: { id: string } }) {
   const deleteUser = async (userId: string) => {
     if (!confirm("Are you sure you want to delete this user?")) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/tenant/${params.id}/users/${userId}`, {
+      const res = await fetch(`http://localhost:1501/api/tenant/${params.id}/users/${userId}`, {
         method: "DELETE",
         headers: { "Authorization": `Bearer ${Cookies.get("token")}` }
       });
@@ -44,7 +44,7 @@ export default function OrgUsersPage({ params }: { params: { id: string } }) {
   const resetPassword = async (userId: string) => {
     if (!confirm("Are you sure you want to reset this user's password?")) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/tenant/${params.id}/users/${userId}/password`, {
+      const res = await fetch(`http://localhost:1501/api/tenant/${params.id}/users/${userId}/password`, {
         method: "PATCH",
         headers: { "Authorization": `Bearer ${Cookies.get("token")}` }
       });
@@ -60,7 +60,7 @@ export default function OrgUsersPage({ params }: { params: { id: string } }) {
   const addUser = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch(`http://localhost:5000/api/tenant/${params.id}/users`, {
+      const res = await fetch(`http://localhost:1501/api/tenant/${params.id}/users`, {
         method: "POST",
         headers: {
           "Authorization": `Bearer ${Cookies.get("token")}`,

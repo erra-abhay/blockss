@@ -8,7 +8,7 @@ export default function OrgOverviewPage({ params }: { params: { id: string } }) 
 
   const fetchTenant = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/api/tenant/${params.id}`, {
+      const res = await fetch(`http://localhost:1501/api/tenant/${params.id}`, {
         headers: { "Authorization": `Bearer ${Cookies.get("token")}` }
       });
       if (res.ok) {
@@ -27,7 +27,7 @@ export default function OrgOverviewPage({ params }: { params: { id: string } }) 
 
   const updateStatus = async (status: string) => {
     try {
-      const res = await fetch(`http://localhost:5000/api/tenant/${params.id}/status`, {
+      const res = await fetch(`http://localhost:1501/api/tenant/${params.id}/status`, {
         method: "PATCH",
         headers: {
           "Authorization": `Bearer ${Cookies.get("token")}`,

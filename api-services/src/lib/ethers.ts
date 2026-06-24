@@ -26,7 +26,7 @@ export function decryptKey(text: string): string {
 }
 
 export function getProvider() {
-  const rpcUrl = process.env.BESU_RPC_URL || "http://127.0.0.1:8545";
+  const rpcUrl = process.env.BESU_RPC_URL || "http://127.0.0.1:1603";
   return new ethers.JsonRpcProvider(rpcUrl);
 }
 

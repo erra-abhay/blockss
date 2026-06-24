@@ -51,7 +51,7 @@ const worker = new Worker(
       if (dbTemplate) templateHtml = dbTemplate.htmlContent;
     }
 
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:2011';
     const verificationUrl = `${appUrl}/verify/${certificate.certificateHash}`;
 
     // 2. Generate PDF

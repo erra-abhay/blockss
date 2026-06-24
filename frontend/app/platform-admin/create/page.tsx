@@ -13,7 +13,7 @@ export default function CreateTenantPage() {
     setCredentials(null);
     try {
       const token = Cookies.get("token");
-      const res = await fetch("http://localhost:5000/api/tenant/register", {
+      const res = await fetch("http://localhost:1501/api/tenant/register", {
         method: "POST",
         headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
         body: JSON.stringify(formData),

@@ -19,7 +19,7 @@ export default function IssueCertificatePage() {
     setLoading(true);
     try {
       const token = Cookies.get("token");
-      const res = await fetch("http://localhost:5000/api/certificates", {
+      const res = await fetch("http://localhost:1501/api/certificates", {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",

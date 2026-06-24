@@ -21,7 +21,7 @@ app.use('/api/certificates', certificateRoutes);
 app.use('/api/verify', verifyRoutes);
 app.use('/api/students', studentRoutes);
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 1501;
 app.listen(PORT, () => {
   console.log(`Backend server running on port ${PORT}`);
 });

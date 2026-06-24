@@ -18,7 +18,7 @@ services:
       - ./:/config
       - validator1_data:/data
     ports:
-      - "8545:8545"
+      - "1603:8545"
 
 volumes:
   validator1_data:
