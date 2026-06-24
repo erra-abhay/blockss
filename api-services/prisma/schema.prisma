@@ -1,0 +1,129 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+
+enum CertStatus {
+  PENDING
+  ISSUED
+  REVOKED
+  FAILED
+}
+
+enum BatchStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  PARTIAL_FAIL
+}
+
+enum TenantStatus {
+  ACTIVE
+  PAUSED
+  BANNED
+}
+
+// ==========================================
+// PUBLIC SCHEMA MODELS
+// ==========================================
+
+model PlatformAdmin {
+  id           String   @id @default(uuid())
+  username     String   @unique // 12-char UUID
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Tenant {
+  id                 String       @id @default(uuid())
+  name               String
+  slug               String       @unique
+  shortName          String?
+  walletAddress      String
+  walletEncryptedKey String
+  status             TenantStatus @default(ACTIVE)
+  createdAt          DateTime     @default(now())
+  updatedAt          DateTime     @updatedAt
+  users              TenantUser[]
+}
+
+enum Role {
+  TENANT_ADMIN
+  STUDENT
+}
+
+model TenantUser {
+  id           String   @id @default(uuid())
+  tenantId     String
+  username     String   @unique
+  passwordHash String
+  name         String
+  role         Role     @default(STUDENT)
+  tenant       Tenant   @relation(fields: [tenantId], references: [id])
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  tenantId  String
+  actorId   String
+  action    String
+  targetId  String?
+  metadata  Json?
+  ip        String?
+  createdAt DateTime @default(now())
+}
+
+// ==========================================
+// PER-TENANT SCHEMA MODELS
+// (Created dynamically per tenant)
+// ==========================================
+
+model Certificate {
+  id               String     @id @default(uuid())
+  recipientName    String
+  recipientEmail   String
+  courseName       String
+  issueDate        DateTime
+  expiryDate       DateTime?
+  certificateHash  String     @unique
+  txHash           String?
+  blockNumber      BigInt?
+  localPdfPath     String?
+  status           CertStatus @default(PENDING)
+  metadata         Json?
+  templateId       String?
+  batchId          String?
+  issuedById       String
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+}
+
+model Template {
+  id           String   @id @default(uuid())
+  name         String
+  htmlContent  String
+  thumbnailUrl String?
+  isDefault    Boolean  @default(false)
+  createdAt    DateTime @default(now())
+}
+
+model IssuanceBatch {
+  id          String      @id @default(uuid())
+  name        String
+  status      BatchStatus
+  totalCount  Int
+  processed   Int         @default(0)
+  failed      Int         @default(0)
+  csvPath     String?
+  createdAt   DateTime    @default(now())
+  completedAt DateTime?
+}

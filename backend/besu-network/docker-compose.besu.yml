@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  besu-validator-1:
+    image: hyperledger/besu:latest
+    command: [
+      "--genesis-file=/config/genesis.json",
+      "--network-id=1337",
+      "--rpc-http-enabled=true",
+      "--rpc-http-host=0.0.0.0",
+      "--rpc-http-port=8545",
+      "--rpc-http-cors-origins=*",
+      "--rpc-http-api=ETH,NET,QBFT,WEB3",
+      "--host-allowlist=*",
+      "--data-path=/data"
+    ]
+    volumes:
+      - ./:/config
+      - validator1_data:/data
+    ports:
+      - "8545:8545"
+
+volumes:
+  validator1_data:
